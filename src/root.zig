@@ -8,7 +8,7 @@ pub fn abjadValue(input: []const u8) !u32 {
     var total: u32 = 0;
 
     while (iter.nextCodepoint()) |char| {
-        const value: u32 = switch (char) {
+        const nextValue: u32 = switch (char) {
             'ا' => 1,
             'ب' => 2,
             'ج' => 3,
@@ -40,7 +40,7 @@ pub fn abjadValue(input: []const u8) !u32 {
             else => 0,
         };
 
-        total += value;
+        total += nextValue;
     }
 
     return total;
