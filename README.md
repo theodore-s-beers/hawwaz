@@ -11,3 +11,9 @@ including [TypeScript](https://github.com/theodore-s-beers/abjadcalc) and
 I hope to add more documentation here later. For the time being, it may be
 instructive to review the notes on my site
 [abjadcalc.com](https://www.abjadcalc.com/).
+
+To build the library and run tests:
+
+```sh
+zig build test
+```
