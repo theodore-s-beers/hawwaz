@@ -1,10 +1,10 @@
 const std = @import("std");
 const testing = std.testing;
 
-pub const AbjadOrder = enum { Mashriqi, Maghribi };
+pub const AbjadOrder = enum { mashriqi, maghribi };
 
 pub const AbjadPrefs = struct {
-    order: AbjadOrder = .Mashriqi,
+    order: AbjadOrder = .mashriqi,
     count_shadda: bool = false,
     double_alif_madda: bool = false,
     ignore_lone_hamza: bool = false,
@@ -14,7 +14,7 @@ pub fn abjad(input: []const u8, prefs: AbjadPrefs) !u32 {
     const view = try std.unicode.Utf8View.init(input);
     var iter = view.iterator();
 
-    const maghribi = prefs.order == .Maghribi;
+    const maghribi = prefs.order == .maghribi;
 
     var total: u32 = 0;
 
