@@ -1,6 +1,10 @@
 const std = @import("std");
 const testing = std.testing;
 
+//
+// Public types
+//
+
 pub const AbjadOrder = enum { mashriqi, maghribi };
 
 pub const AbjadPrefs = struct {
@@ -9,6 +13,10 @@ pub const AbjadPrefs = struct {
     double_alif_madda: bool = false,
     ignore_lone_hamza: bool = false,
 };
+
+//
+// Public functions
+//
 
 pub fn abjad(input: []const u8, prefs: AbjadPrefs) !u32 {
     const view = try std.unicode.Utf8View.init(input);
@@ -25,6 +33,10 @@ pub fn abjad(input: []const u8, prefs: AbjadPrefs) !u32 {
 
     return total;
 }
+
+//
+// Private functions
+//
 
 fn letterValue(char: u21, last_val: u32, prefs: AbjadPrefs) u32 {
     const maghribi = prefs.order == .maghribi;
@@ -64,6 +76,10 @@ fn letterValue(char: u21, last_val: u32, prefs: AbjadPrefs) u32 {
         else => 0,
     };
 }
+
+//
+// Tests
+//
 
 test "basmala" {
     try testing.expect(try abjad("بسم الله الرحمن الرحيم", AbjadPrefs{}) == 786);
