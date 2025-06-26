@@ -14,47 +14,48 @@ pub fn abjad(input: []const u8, prefs: AbjadPrefs) !u32 {
     const view = try std.unicode.Utf8View.init(input);
     var iter = view.iterator();
 
-    const maghribi = prefs.order == .maghribi;
-
     var total: u32 = 0;
-
     while (iter.nextCodepoint()) |char| {
-        const nextValue: u32 = switch (char) {
-            'ا' => 1,
-            'ب' => 2,
-            'ج' => 3,
-            'د' => 4,
-            'ه' => 5,
-            'و' => 6,
-            'ز' => 7,
-            'ح' => 8,
-            'ط' => 9,
-            'ي' => 10,
-            'ك' => 20,
-            'ل' => 30,
-            'م' => 40,
-            'ن' => 50,
-            'س' => if (maghribi) 300 else 60,
-            'ع' => 70,
-            'ف' => 80,
-            'ص' => if (maghribi) 60 else 90,
-            'ق' => 100,
-            'ر' => 200,
-            'ش' => if (maghribi) 1000 else 300,
-            'ت' => 400,
-            'ث' => 500,
-            'خ' => 600,
-            'ذ' => 700,
-            'ض' => if (maghribi) 90 else 800,
-            'ظ' => if (maghribi) 800 else 900,
-            'غ' => if (maghribi) 900 else 1000,
-            else => 0,
-        };
-
-        total += nextValue;
+        total += letterValue(char, prefs);
     }
 
     return total;
+}
+
+fn letterValue(char: u21, prefs: AbjadPrefs) u32 {
+    const maghribi = prefs.order == .maghribi;
+
+    return switch (char) {
+        'ا' => 1,
+        'ب' => 2,
+        'ج' => 3,
+        'د' => 4,
+        'ه' => 5,
+        'و' => 6,
+        'ز' => 7,
+        'ح' => 8,
+        'ط' => 9,
+        'ي' => 10,
+        'ك' => 20,
+        'ل' => 30,
+        'م' => 40,
+        'ن' => 50,
+        'س' => if (maghribi) 300 else 60,
+        'ع' => 70,
+        'ف' => 80,
+        'ص' => if (maghribi) 60 else 90,
+        'ق' => 100,
+        'ر' => 200,
+        'ش' => if (maghribi) 1000 else 300,
+        'ت' => 400,
+        'ث' => 500,
+        'خ' => 600,
+        'ذ' => 700,
+        'ض' => if (maghribi) 90 else 800,
+        'ظ' => if (maghribi) 800 else 900,
+        'غ' => if (maghribi) 900 else 1000,
+        else => 0,
+    };
 }
 
 test "basmala" {
