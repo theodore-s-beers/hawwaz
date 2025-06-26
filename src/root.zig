@@ -28,7 +28,7 @@ pub fn abjad(input: []const u8, prefs: AbjadPrefs) !u32 {
     while (iter.nextCodepoint()) |char| {
         const new_val = letterValue(char, last_val, prefs);
         total += new_val;
-        last_val = if (char == '\u{0651}') 0 else new_val;
+        last_val = if (char == '\u{0651}') 0 else new_val; // Ignore repeated shadda
     }
 
     return total;
