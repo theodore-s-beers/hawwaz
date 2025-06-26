@@ -10,7 +10,7 @@ pub const AbjadPrefs = struct {
     ignore_lone_hamza: bool = false,
 };
 
-pub fn abjadValue(input: []const u8, prefs: AbjadPrefs) !u32 {
+pub fn abjad(input: []const u8, prefs: AbjadPrefs) !u32 {
     const view = try std.unicode.Utf8View.init(input);
     var iter = view.iterator();
 
@@ -57,6 +57,6 @@ pub fn abjadValue(input: []const u8, prefs: AbjadPrefs) !u32 {
     return total;
 }
 
-test "basmala abjad value" {
-    try testing.expect(try abjadValue("بسم الله الرحمن الرحيم", AbjadPrefs{}) == 786);
+test "basmala" {
+    try testing.expect(try abjad("بسم الله الرحمن الرحيم", AbjadPrefs{}) == 786);
 }
