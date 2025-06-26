@@ -3,6 +3,13 @@ const testing = std.testing;
 
 pub const AbjadOrder = enum { Mashriqi, Maghribi };
 
+pub const AbjadPrefs = struct {
+    order: AbjadOrder = .Mashriqi,
+    count_shadda: bool = false,
+    double_alif_madda: bool = false,
+    ignore_lone_hamza: bool = false,
+};
+
 pub fn abjadValue(input: []const u8) !u32 {
     const view = try std.unicode.Utf8View.init(input);
     var iter = view.iterator();
