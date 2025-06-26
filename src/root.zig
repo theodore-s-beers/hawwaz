@@ -46,6 +46,6 @@ pub fn abjadValue(input: []const u8) !u32 {
     return total;
 }
 
-test "abjad value calculation" {
+test "basmala abjad value" {
     try testing.expect(try abjadValue("بسم الله الرحمن الرحيم") == 786);
 }
