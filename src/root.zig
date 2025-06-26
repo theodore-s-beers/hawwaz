@@ -1,6 +1,8 @@
 const std = @import("std");
 const testing = std.testing;
 
+pub const AbjadOrder = enum { Mashriqi, Maghribi };
+
 pub fn abjadValue(input: []const u8) !u32 {
     const view = try std.unicode.Utf8View.init(input);
     var iter = view.iterator();
