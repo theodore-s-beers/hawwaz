@@ -15,14 +15,18 @@ pub fn abjad(input: []const u8, prefs: AbjadPrefs) !u32 {
     var iter = view.iterator();
 
     var total: u32 = 0;
+    var last_val: u32 = 0;
+
     while (iter.nextCodepoint()) |char| {
-        total += letterValue(char, prefs);
+        const new_val = letterValue(char, last_val, prefs);
+        total += new_val;
+        last_val = if (char == '\u{0651}') 0 else new_val;
     }
 
     return total;
 }
 
-fn letterValue(char: u21, prefs: AbjadPrefs) u32 {
+fn letterValue(char: u21, last_val: u32, prefs: AbjadPrefs) u32 {
     const maghribi = prefs.order == .maghribi;
 
     return switch (char) {
@@ -54,6 +58,7 @@ fn letterValue(char: u21, prefs: AbjadPrefs) u32 {
         'ض' => if (maghribi) 90 else 800,
         'ظ' => if (maghribi) 800 else 900,
         'غ' => if (maghribi) 900 else 1000,
+        '\u{0651}' => if (prefs.count_shadda) last_val else 0,
         else => 0,
     };
 }
