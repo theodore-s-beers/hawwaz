@@ -1,6 +1,8 @@
 const std = @import("std");
 const testing = std.testing;
 
+const utf8_decode = @import("utf8_decode");
+
 //
 // Public types
 //
@@ -19,13 +21,11 @@ pub const AbjadPrefs = struct {
 //
 
 pub fn abjad(input: []const u8, prefs: AbjadPrefs) !u32 {
-    const view = try std.unicode.Utf8View.init(input);
-    var iter = view.iterator();
-
+    var iter = utf8_decode.Utf8Iterator.init(input);
     var total: u32 = 0;
     var last_val: u32 = 0;
 
-    while (iter.nextCodepoint()) |char| {
+    while (iter.next()) |char| {
         const new_val = letterValue(char, last_val, prefs);
         total += new_val;
         last_val = if (char == '\u{0651}') 0 else new_val; // Ignore repeated shadda
@@ -38,7 +38,7 @@ pub fn abjad(input: []const u8, prefs: AbjadPrefs) !u32 {
 // Private functions
 //
 
-fn letterValue(char: u21, last_val: u32, prefs: AbjadPrefs) u32 {
+fn letterValue(char: u32, last_val: u32, prefs: AbjadPrefs) u32 {
     const maghribi = prefs.order == .maghribi;
 
     return switch (char) {
