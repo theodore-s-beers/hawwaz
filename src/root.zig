@@ -82,40 +82,40 @@ fn letterValue(char: u32, last_val: u32, prefs: AbjadPrefs) u32 {
 //
 
 test "basmala" {
-    try testing.expect(try abjad("بسم الله الرحمن الرحيم", AbjadPrefs{}) == 786);
+    try testing.expect(try abjad("بسم الله الرحمن الرحيم", .{}) == 786);
 }
 
 test "full alphabet" {
     const input = "ابجد هوز حطي كلمن سعفص قرشت ثخذ ضظغ";
     const expected: u32 = 5995;
-    try testing.expect(try abjad(input, AbjadPrefs{}) == expected);
-    try testing.expect(try abjad(input, AbjadPrefs{ .order = .maghribi }) == expected);
+    try testing.expect(try abjad(input, .{}) == expected);
+    try testing.expect(try abjad(input, .{ .order = .maghribi }) == expected);
 }
 
 test "latin script ignored" {
-    try testing.expect(try abjad("روح الله tap-dancing خمینی", AbjadPrefs{}) == 990);
+    try testing.expect(try abjad("روح الله tap-dancing خمینی", .{}) == 990);
 }
 
 test "baha counted" {
-    try testing.expect(try abjad("بهاء", AbjadPrefs{}) == 9);
+    try testing.expect(try abjad("بهاء", .{}) == 9);
 }
 
 test "baha ignored" {
-    try testing.expect(try abjad("بهاء", AbjadPrefs{ .ignore_lone_hamza = true }) == 8);
+    try testing.expect(try abjad("بهاء", .{ .ignore_lone_hamza = true }) == 8);
 }
 
 test "shadda ignored" {
-    try testing.expect(try abjad("قد تمّمته", AbjadPrefs{}) == 989);
+    try testing.expect(try abjad("قد تمّمته", .{}) == 989);
 }
 
 test "shadda counted" {
-    try testing.expect(try abjad("رئیس مؤسّس دانشگاه", AbjadPrefs{ .count_shadda = true }) == 887);
+    try testing.expect(try abjad("رئیس مؤسّس دانشگاه", .{ .count_shadda = true }) == 887);
 }
 
 test "humayun chronogram" {
-    try testing.expect(try abjad("همایون پادشاه از بام افتاد", AbjadPrefs{}) == 962);
+    try testing.expect(try abjad("همایون پادشاه از بام افتاد", .{}) == 962);
 }
 
 test "vahshi chronogram" {
-    try testing.expect(try abjad("وفات وحشی مسکین", AbjadPrefs{}) == 991);
+    try testing.expect(try abjad("وفات وحشی مسکین", .{}) == 991);
 }
